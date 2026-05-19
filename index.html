@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彭辉 - 学术与工程简历</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Serif SC', system-ui, sans-serif;
+            background: #f5f5f4;
+        }
+        .paper-card, .patent-card {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .paper-card:hover, .patent-card:hover {
+            border-left-color: #1e3a5f;
+            background: #fafaf9;
+        }
+        .status-pill {
+            font-variant-numeric: tabular-nums;
+        }
+        .metric-number {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+        .skill-tag {
+            transition: all 0.15s ease;
+        }
+        .skill-tag:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            position: relative;
+            padding-left: 1rem;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+            bottom: 0.25rem;
+            width: 4px;
+            background: #1e3a5f;
+            border-radius: 2px;
+        }
+        .compact-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 640px) {
+            .compact-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+        }
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -4px rgba(0,0,0,0.08);
+        }
+
+        /* Hover Image Preview */
+        .{
+            position: relative;
+        }
+        .hover-preview-img {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 12px;
+            width: 380px;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px -8px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-8px) scale(0.96);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+            pointer-events: none;
+            background: white;
+        }
+        .hover-preview-wrap:hover .hover-preview-img {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
+        }
+        .hover-preview-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #1e3a5f;
+            background: #e8edf3;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            cursor: default;
+        }
+        .hover-preview-label svg {
+            width: 12px;
+            height: 12px;
+        }
+        @media (max-width: 1280px) {
+            .hover-preview-img {
+                left: auto;
+                right: 0;
+                top: 100%;
+                margin-left: 0;
+                margin-top: 8px;
+                width: 100%;
+                max-height: 200px;
+            }
+        }
+
+
+        /* ===== Hover Image Gallery ===== */
+        .card-has-preview {
+            position: relative;
+        }
+        .preview-trigger {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(30, 58, 95, 0.08);
+            border: 1px solid rgba(30, 58, 95, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+            color: #1e3a5f;
+        }
+        .preview-trigger:hover {
+            background: #1e3a5f;
+            color: white;
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        }
+        .preview-trigger svg {
+            width: 16px;
+            height: 16px;
+        }
+        .preview-trigger .tooltip {
+            position: absolute;
+            top: -28px;
+            right: 0;
+            background: #1e3a5f;
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(4px);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .preview-trigger .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 10px;
+            border: 4px solid transparent;
+            border-top-color: #1e3a5f;
+        }
+        .preview-trigger:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        /* Lightbox Overlay */
+        .img-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 40px;
+        }
+        .img-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .img-lightbox-inner {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 32px 64px -16px rgba(0,0,0,0.4);
+            transform: scale(0.92) translateY(20px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-lightbox.active .img-lightbox-inner {
+            transform: scale(1) translateY(0);
+        }
+
+        /* ===== Image Loading States ===== */
+        .img-lightbox-img {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            background: #f5f5f4;
+            transition: opacity 0.3s ease;
+        }
+        .img-lightbox-img.loading {
+            opacity: 0;
+        }
+        .img-lightbox-img.loaded {
+            opacity: 1;
+        }
+        /* Skeleton shimmer */
+        .img-skeleton {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .img-wrap {
+            position: relative;
+            min-height: 200px;
+            background: #f5f5f4;
+        }
+        /* Preview button pulse on cards with multiple images */
+        .preview-trigger.has-multiple::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 1.5px solid white;
+        }
+        /* Smooth card entrance */
+        .paper-card, .patent-card {
+            animation: cardEnter 0.4s ease-out;
+        }
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .img-lightbox-caption {
+            padding: 16px 24px;
+            background: white;
+            border-top: 1px solid #e7e5e4;
+        }
+        .img-lightbox-caption h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1c1917;
+            margin-bottom: 4px;
+        }
+        .img-lightbox-caption p {
+            font-size: 13px;
+            color: #78716c;
+        }
+        .img-lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #44403c;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        .img-lightbox-close:hover {
+            background: white;
+            transform: rotate(90deg);
+            color: #1c1917;
+        }
+        .img-lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #44403c;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        .img-lightbox-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .img-lightbox-nav.prev { left: 16px; }
+        .img-lightbox-nav.next { right: 16px; }
+        .img-lightbox-counter {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-variant-numeric: tabular-nums;
+        }
+        /* Thumbnail strip */
+        .img-lightbox-thumbs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #fafaf9;
+            border-top: 1px solid #e7e5e4;
+            overflow-x: auto;
+        }
+        .img-lightbox-thumb {
+            width: 64px;
+            height: 48px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .img-lightbox-thumb:hover {
+            border-color: #1e3a5f;
+        }
+        .img-lightbox-thumb.active {
+            border-color: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(30,58,95,0.15);
+        }
+        @media (max-width: 768px) {
+            .img-lightbox { padding: 16px; }
+            .img-lightbox-inner { border-radius: 12px; }
+            .img-lightbox-nav { display: none; }
+            .img-lightbox-thumbs { padding: 8px 16px; }
+        }
+
+
+        /* ===== Hover Thumbnail Preview ===== */
+        .card-has-preview {
+            position: relative;
+        }
+        .hover-thumb {
+            position: absolute;
+            top: 50%;
+            right: calc(100% + 16px);
+            transform: translateY(-50%) scale(0.9);
+            width: 200px;
+            height: 140px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px -8px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
+            pointer-events: none;
+            border: 2px solid white;
+            background: white;
+        }
+        .card-has-preview:hover .hover-thumb {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) scale(1);
+        }
+        .hover-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hover-thumb-badge {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+        @media (max-width: 1024px) {
+            .hover-thumb { display: none; }
+        }
+
+    </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="text-stone-800 antialiased">
+
+    <!-- Top Contact Bar -->
+    <div class="bg-stone-900 text-stone-300 text-sm py-2.5">
+        <div class="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-4 flex-wrap">
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    彭辉
+                </span>
+                <span class="text-stone-600">|</span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    mcphzane@gmail.com
+                </span>
+                <span class="text-stone-600">|</span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    <a href="https://github.com/Zaneph1" target="_blank" class="hover:text-white transition-colors">github.com/Zaneph1</a>
+                </span>
+                <span class="text-stone-600">|</span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    <a href="https://orcid.org/0009-0009-3071-0170" target="_blank" class="hover:text-white transition-colors">ORCID</a>
+                </span>
+            </div>
+            <span class="text-stone-500 text-xs">更新于 2026 年 5 月</span>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 py-10">
+
+        <!-- Header / Profile -->
+        <header class="mb-10 pb-8 border-b-2 border-stone-200">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="flex-1">
+                    <h1 class="text-4xl font-bold text-stone-900 mb-3 tracking-tight">彭辉</h1>
+                    <div class="flex flex-wrap items-center gap-3 text-stone-600 mb-4">
+                        <span class="bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded text-sm font-medium">本科</span>
+                        <span class="text-stone-400">•</span>
+                        <span>软件工程</span>
+                        <span class="text-stone-400">•</span>
+                        <span>广东第二师范学院</span>
+                        <span class="text-stone-400">•</span>
+                        <span>GPA 3.87 (前 5%)</span>
+                    </div>
+                    <p class="text-stone-600 leading-relaxed max-w-2xl text-[15px]">
+                        师从<strong>彭俊峰教授</strong>，研究方向为<strong>人工智能</strong>、<strong>联邦学习</strong>与<strong>大模型安全</strong>。在 TDSC、EAAI、iScience 等期刊发表论文 7 篇，已经接收2篇，申请发明专利 2 项。现任科理咨询（深圳）股份有限公司智能体工程师，具备从 <strong>0→1</strong> 搭建 AI 系统的工程能力。
+                    </p>
+                </div>
+                <div class="flex gap-3 md:text-right">
+
+                    <div class="bg-white border border-stone-200 rounded-lg px-4 py-3 min-w-[100px]">
+                        <div class="metric-number text-2xl font-bold text-stone-900">7 篇</div>
+                        <div class="text-xs text-stone-500 mt-0.5">参与论文</div>
+                    </div>
+                    <div class="bg-white border border-stone-200 rounded-lg px-4 py-3 min-w-[100px]">
+                        <div class="metric-number text-2xl font-bold text-stone-900">2 项</div>
+                        <div class="text-xs text-stone-500 mt-0.5">发明专利</div>
+                    </div>
+                    <div class="bg-white border border-stone-200 rounded-lg px-4 py-3 min-w-[100px]">
+                        <div class="metric-number text-2xl font-bold text-stone-900">3 项</div>
+                        <div class="text-xs text-stone-500 mt-0.5">企业项目</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="grid lg:grid-cols-12 gap-10">
+
+            <!-- Left Column: Content -->
+            <div class="lg:col-span-8 space-y-10">
+
+                <!-- Education -->
+                <section>
+                    <h2 class="section-title text-xl font-bold text-stone-900 mb-5 flex items-center gap-2">
+                        教育背景
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="compact-row items-start">
+                            <div class="text-sm text-stone-500 pt-0.5 font-medium">2017.09 - 2021.06</div>
+                            <div class="bg-white border border-stone-200 rounded-lg p-4 hover-lift">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="font-bold text-stone-900">本科 · 软件工程</h3>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded border border-green-200">已毕业</span>
+                                </div>
+                                <div class="text-sm text-stone-600 mb-2">广东第二师范学院 · <strong>导师：彭俊峰</strong>（本科起师从）</div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-xs bg-stone-50 border border-stone-200 text-stone-600 px-2 py-0.5 rounded">GPA 3.87</span>
+                                    <span class="text-xs bg-stone-50 border border-stone-200 text-stone-600 px-2 py-0.5 rounded">专业前 5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Publications -->
+                <section>
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="section-title text-xl font-bold text-stone-900">学术成果</h2>
+                        <div class="flex gap-2 text-sm">
+                            <button onclick="filterPapers('all')" id="btn-all" class="px-3 py-1 rounded-md bg-stone-800 text-white font-medium transition-colors">全部</button>
+                            <button onclick="filterPapers('published')" id="btn-pub" class="px-3 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors">已接收</button>
+                            <button onclick="filterPapers('review')" id="btn-rev" class="px-3 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors">审稿中</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3" id="papers-list">
+                        <!-- Published 1: CIR2025 -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="published" data-preview="paper-cir2025">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-cir2025" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-cir2025"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-cir2025')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-green-50 text-green-700 text-xs font-bold rounded border border-green-200">已接收</span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        Psychological Assistance Model Based on Finetuning and Knowledge Base Technology
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">CIR2025 会议论文 · <strong>署名作者</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>青少年心理健康问题突出，传统心理咨询资源稀缺、费用高；通用大模型在心理健康场景存在专业不准确、共情不足、易产生幻觉等缺陷。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">方法创新：</span>提出<strong class="text-stone-900">RAG + LoRA</strong>双引擎心理援助大模型，基于 LLaMA-3.2 架构，仅更新 0.8% 参数，幻觉率 8.3%（降低 30%+），知识忠实度 0.672。
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5 flex-wrap">
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">大语言模型</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">RAG</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">LoRA 微调</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">心理健康</span>
+                                </div>
+                                <button onclick="toggleAbs(this)" class="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">
+                                    展开摘要
+                                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                            </div>
+                            <div class="hidden mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>承担模型效果验证、数据质量核查、实验结果复核等工作，保障模型输出的专业性、安全性与实验结论可靠性。
+                            </div>
+                        </div>
+
+                        <!-- Published 2: Heliyon -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="published" data-preview="paper-heliyon">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-heliyon" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-heliyon"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-heliyon')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-green-50 text-green-700 text-xs font-bold rounded border border-green-200">已接收</span>
+                                        <span class="text-xs text-stone-400">2024</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        Practice of distributed machine learning in clinical modeling for chronic obstructive pulmonary disease
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">Heliyon (SCI 收录) · <strong>署名作者</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>慢阻肺（COPD）患者数据分散在不同医疗机构形成数据孤岛，集中式建模存在隐私泄露风险。提出<strong class="text-stone-900">COPD_AVG_FL</strong>联邦学习框架。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>相比 CML 基线，准确率提升<strong class="text-stone-900">13.4%</strong>、精确率 13.3%、召回率 12.8%、F1-Score 13.1%、AUC 12.9%。
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5 flex-wrap">
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">联邦学习</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">隐私保护</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">慢阻肺诊断</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">FedAvg</span>
+                                </div>
+                                <button onclick="toggleAbs(this)" class="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">
+                                    展开摘要
+                                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                            </div>
+                            <div class="hidden mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>核心负责模型验证（Validation）工作，包括实验流程合规性检查、模型预测结果与临床真实标签比对、实验指标计算复核、结果稳定性验证。
+                            </div>
+                        </div>
+
+                        <!-- Review 1: TDSC -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="review" data-preview="paper-tdsc">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-tdsc" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-tdsc"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-tdsc')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            审稿中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        TriCoAlign: Cyclic Alignment for Stabilizing Large Language Models in Network Intrusion Detection
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">IEEE TDSC (CCF-A 类，网络安全顶刊) · <strong>第一作者</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>大模型在入侵检测中推理不稳定、决策不一致。首次提出<strong class="text-stone-900">三重循环对齐框架 TriCoAlign</strong>，包含格式对齐、思维对齐、答案对齐三大模块，循环优化降低推理波动。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>NSL-KDD: Acc 98.6%, F1 99.1%；CIC-IDS: Acc <strong class="text-stone-900">99.8%</strong>, F1 99.9%；UNSW-NB15: Acc 84.5%, F1 91.4%。
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5 flex-wrap">
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">入侵检测</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">大语言模型</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">循环对齐</span>
+                                </div>
+                                <button onclick="toggleAbs(this)" class="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">
+                                    展开摘要
+                                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                            </div>
+                            <div class="hidden mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>第一作者，负责框架设计、核心算法实现、全部实验与论文撰写。
+                            </div>
+                        </div>
+
+                        <!-- Review 2: EAAI - PCF_ID -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="review" data-preview="paper-pcfid">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-pcfid" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-pcfid"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-pcfid')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            审稿中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        PCF_ID: A Novel Prompt Cast Framework for Intrusion Detection
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">Engineering Applications of Artificial Intelligence (EAAI, SCI 一区 TOP) · <strong>第一作者</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>传统大模型无法直接处理网络入侵检测的表格数据（离散、弱语义、结构不匹配），导致检测精度低、泛化差、不可解释。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心创新：</span>提出<strong class="text-stone-900">PCF_ID 提示投射框架</strong>，将结构化数据转为 Q-R-A 三元组（问题 - 推理 - 答案）微调大模型，让大模型像安全专家一样推理判断攻击类型。
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>CIC-IDS2017: Acc <strong class="text-stone-900">97.17%</strong>, F1 0.9843；UNSW-NB15: Acc 82.83%, F1 0.9040；NSL-KDD: Acc <strong class="text-stone-900">98.40%</strong>, F1 0.9901。
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5 flex-wrap">
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">入侵检测</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">提示学习</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">大语言模型</span>
+                                    <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">可解释 AI</span>
+                                </div>
+                                <button onclick="toggleAbs(this)" class="text-xs text-stone-500 hover:text-stone-900 flex items-center gap-1 transition-colors">
+                                    展开摘要
+                                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                            </div>
+                            <div class="hidden mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>第一作者，负责框架设计、Q-R-A 构建、模型训练、全部实验、论文撰写。<strong>代码开源：</strong><a href="https://github.com/Zaneph1/PCF_ID" class="underline hover:text-stone-900" target="_blank">https://github.com/Zaneph1/PCF_ID</a>
+                            </div>
+                        </div>
+
+                        <!-- Review 3: iScience -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="review" data-preview="paper-iscience">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-iscience" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-iscience"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-iscience')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            审稿中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        Deep learning models for pathology classification of skin spindle cell tumors focusing on dermatofibrosarcoma protuberans
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">iScience (Cell 子刊，SCI 一区) · <strong>共同第一作者</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>隆突性皮肤纤维肉瘤（DFSP）诊断依赖资深病理医生，基层诊断能力不足。提出<strong class="text-stone-900">DFSPAIM</strong>，全球首个 DFSP AI 诊断模型。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>基于 639 例全切片病理图像，外部验证 AUC <strong class="text-stone-900">0.90</strong>，准确率 93.10%，超过资深病理科医生。
+                            </div>
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">医疗 AI</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">病理分类</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">深度学习</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">中山大学附属第三医院</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>共同第一作者，负责 AI 模型选型、训练、验证与可解释性分析。
+                            </div>
+                        </div>
+
+                        <!-- Review 4: EAAI - EMRWA -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="review" data-preview="paper-emrwa">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-emrwa" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-emrwa"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-emrwa')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            审稿中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2024</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        An Electronic Medical Record Writing Aid Model by Sequence-Based Deep Learning using Real World Data
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">PLOS ONE(SCI) · <strong>核心参与</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>电子病历撰写消耗临床医生大量时间，通用大模型因难以获取真实临床数据而不适用。提出 EMRWA 模型，基于真实临床病历进行自监督学习。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>相比通用大模型提升<strong class="text-stone-900">14.99%</strong>，相比人工提升 14.61%；ROUGE-L、BLEU 显著超越扁鹊、仲景、华佗 GPT 等医疗大模型。
+                            </div>
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">电子病历</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">深度学习</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">自然语言处理</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">中山大学附属第三医院</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>核心参与，负责数据预处理、模型训练、实验验证。<strong>模型部署：</strong><a href="https://huggingface.co/spaces/PHZane/emrwa/tree/main" class="underline hover:text-stone-900" target="_blank">Hugging Face Spaces</a>
+                            </div>
+                        </div>
+
+                        <!-- Review 5: EAAI - CT_Helper -->
+                        <div class="paper-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-cat="review" data-preview="paper-cthelper">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-paper-cthelper" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-paper-cthelper"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('paper-cthelper')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            审稿中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2024</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        CT_Helper: A decision-support architecture for carbon trading using deep reinforcement learning
+                                    </h3>
+                                    <p class="text-sm text-stone-500 italic">PLOS ONE(SCI) · <strong>核心参与</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>碳交易数据既非平稳时间序列也非高波动序列，传统模型难以准确预测。使用深度强化学习训练最优交易策略模型，在 8 家真实碳交易机构数据上评估。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心指标：</span>投资组合价值<strong class="text-stone-900">76,962.008</strong>，总收益率达<strong class="text-stone-900">1439.240%</strong>，远超传统 Buy & Hold 策略。
+                            </div>
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">深度强化学习</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">碳交易</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">时间序列预测</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>核心参与，负责数据处理、模型实验、结果可视化。
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Patents Section -->
+                <section>
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="section-title text-xl font-bold text-stone-900">知识产权</h2>
+                        <div class="flex gap-2 text-sm">
+                            <button onclick="filterPatents('all')" id="pat-btn-all" class="px-3 py-1 rounded-md bg-stone-800 text-white font-medium transition-colors">全部</button>
+                            <button onclick="filterPatents('pending')" id="pat-btn-pending" class="px-3 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors">申请中</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3" id="patents-list">
+                        <!-- Patent 1: QFFL -->
+                        <div class="patent-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-pat="pending" data-preview="patent-qffl">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-patent-qffl" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-patent-qffl"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('patent-qffl')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            受理中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                        <span class="text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">发明专利</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        一种基于量因子的联邦学习预测方法及其系统
+                                    </h3>
+                                    <p class="text-sm text-stone-500"><strong>核心发明人</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>传统联邦学习（FedAvg）简单平均加权，数据量小的客户端会拉低全局模型性能；多机构数据孤岛、隐私不能外泄、数据规模差异大。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心创新：</span>首次提出<strong class="text-stone-900">数据量因子加权</strong>替代传统平均聚合，按客户端数据量占比自动计算权重。准确率较传统联邦平均提升 3.2%，精确率 +3.5%，召回率 +3.8%。
+                            </div>
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">联邦学习</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">量因子加权</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">隐私保护</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>核心发明人，负责算法设计、公式推导、模型架构、实验验证、专利撰写。
+                            </div>
+                        </div>
+
+                        <!-- Patent 2: 向量检索 -->
+                        <div class="patent-card card-has-preview bg-white border border-stone-200 rounded-lg p-4" data-pat="pending" data-preview="patent-vector">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-patent-vector" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-patent-vector"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('patent-vector')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex items-start justify-between gap-4 mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="status-pill px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded border border-amber-200 flex items-center gap-1">
+                                            <span class="w-1 h-1 bg-amber-500 rounded-full animate-pulse"></span>
+                                            受理中
+                                        </span>
+                                        <span class="text-xs text-stone-400">2025</span>
+                                        <span class="text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">发明专利</span>
+                                    </div>
+                                    <h3 class="font-bold text-stone-900 text-[15px] leading-snug mb-1">
+                                        一种基于特征解耦与双分支残差映射的安全向量检索方法及其系统
+                                    </h3>
+                                    <p class="text-sm text-stone-500"><strong>核心发明人</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">解决什么问题：</span>云端向量检索会泄露原始文本隐私（医疗、法律、金融）；向量易被逆向攻击还原原文（Vec2Text 等）；传统单路映射精度与隐私无法兼顾。
+                            </div>
+                            <div class="bg-stone-100 rounded-md p-3 mb-3 text-sm text-stone-700 leading-relaxed">
+                                <span class="font-semibold text-stone-900">核心创新：</span>特征解耦 + 双分支残差架构（全球首创），动态缩放因子λ一键调节隐私强度。检索召回率 Recall@10 84.5%，向量还原成功率降低 12.7%。
+                            </div>
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">向量检索</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">特征解耦</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">残差网络</span>
+                                <span class="skill-tag text-xs bg-white border border-stone-300 text-stone-600 px-2 py-0.5 rounded">隐私保护</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-stone-200 text-sm text-stone-600 leading-relaxed">
+                                <strong>个人贡献：</strong>核心发明人，负责框架设计、双分支结构、损失函数、实验验证、专利撰写与附图设计。
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects -->
+                <section>
+                    <h2 class="section-title text-xl font-bold text-stone-900 mb-5">项目经历</h2>
+                    <div class="space-y-5">
+
+                        <!-- Project 1: 智流工坊 -->
+                        <div class="card-has-preview bg-white border border-stone-200 rounded-lg p-5 hover-lift" data-preview="proj-zhiliu">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-proj-zhiliu" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-proj-zhiliu"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('proj-zhiliu')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="font-bold text-stone-900 text-lg">智流工坊 · 统一 AI 模型访问平台</h3>
+                                    <div class="text-sm text-stone-500 mt-0.5">科理咨询 · 独立全栈开发</div>
+                                </div>
+                                <span class="text-sm text-stone-400 font-medium whitespace-nowrap">2025.10 - 至今</span>
+                            </div>
+
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700">
+                                <span class="font-semibold">项目背景：</span>企业 AI 工具碎片化、使用门槛高，需整合多模型调用并实现用户认证、会话隔离、多租户数据安全。
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                <div class="flex gap-3 text-sm">
+                                    <span class="text-stone-400 font-medium w-16 flex-shrink-0">职责</span>
+                                    <span class="text-stone-700">整合 Dify + OpenClaw，支持 GPT-4、Claude、Gemini 等多模型调用；实现用户认证、会话隔离、多租户数据安全、模型市场、智能体编排</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 pt-3 border-t border-stone-100">
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">Dify</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">OpenClaw</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">Flask</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">全栈开发</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 2: 企业信息采集智能体 -->
+                        <div class="card-has-preview bg-white border border-stone-200 rounded-lg p-5 hover-lift" data-preview="proj-enterprise">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-proj-enterprise" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-proj-enterprise"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('proj-enterprise')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="font-bold text-stone-900 text-lg">企业信息采集与分析智能体</h3>
+                                    <div class="text-sm text-stone-500 mt-0.5">科理咨询 · 商业咨询</div>
+                                </div>
+                                <span class="text-sm text-stone-400 font-medium whitespace-nowrap">2025.07 - 2025.10</span>
+                            </div>
+
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700">
+                                <span class="font-semibold">项目背景：</span>面向商业咨询场景，需自动抓取官网、公众号、AI 搜索等多源信息，结构化提取并生成研判报告。
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                <div class="flex gap-3 text-sm">
+                                    <span class="text-stone-400 font-medium w-16 flex-shrink-0">职责</span>
+                                    <span class="text-stone-700">自动抓取多源信息，结构化提取 6 大类信息，一键生成 Excel 研判报告；并发加速，任务从小时级降至分钟级</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 pt-3 border-t border-stone-100">
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">AI Agent</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">数据采集</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">RAG</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">并发调度</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: 销售流程检验智能体 -->
+                        <div class="card-has-preview bg-white border border-stone-200 rounded-lg p-5 hover-lift" data-preview="proj-sales">
+                            <div class="hover-thumb">
+                                <img src="" alt="预览" id="thumb-proj-sales" loading="lazy">
+                                <span class="hover-thumb-badge" id="badge-proj-sales"></span>
+                            </div>
+                            <button class="preview-trigger" onclick="openLightbox('proj-sales')" aria-label="查看预览图">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="tooltip">点击查看预览图</span>
+                            </button>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="font-bold text-stone-900 text-lg">销售流程检验智能体</h3>
+                                    <div class="text-sm text-stone-500 mt-0.5">科理咨询 · 流程重构</div>
+                                </div>
+                                <span class="text-sm text-stone-400 font-medium whitespace-nowrap">2025.04 - 2025.06</span>
+                            </div>
+
+                            <div class="bg-stone-50 rounded-md p-3 mb-3 text-sm text-stone-700">
+                                <span class="font-semibold">项目背景：</span>某空调公司传统销售核查流程需上传照片至系统留底，人工审核完成，效率低。需重构为标准化 AI 校验流程。
+                            </div>
+
+                            <div class="space-y-2 mb-4">
+                                <div class="flex gap-3 text-sm">
+                                    <span class="text-stone-400 font-medium w-16 flex-shrink-0">职责</span>
+                                    <span class="text-stone-700">将 5 步流程升级为 7 步标准化 AI 校验；实现图片上传、身份验证、自动审核、报告生成；替代人工核查，已推动客户落地</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-1.5 pt-3 border-t border-stone-100">
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">AI Agent</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">流程自动化</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">图像识别</span>
+                                <span class="skill-tag text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded">报告生成</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Column: Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+
+                <!-- Skills -->
+                <div class="bg-white border border-stone-200 rounded-lg p-5">
+                    <h3 class="font-bold text-stone-900 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        技术能力
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">研究方向</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="skill-tag px-2 py-1 bg-stone-800 text-white text-xs rounded font-medium">人工智能</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-800 text-white text-xs rounded font-medium">联邦学习</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-800 text-white text-xs rounded font-medium">大模型安全</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">应用领域</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">入侵检测</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">医疗 AI</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">心理援助</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">碳交易预测</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">电子病历</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">技术栈</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">Python</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">PyTorch</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">Flask</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">Dify</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">FedAvg</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">RAG</span>
+                                <span class="skill-tag px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded border border-stone-200">LoRA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Framework Mini -->
+                <div class="bg-white border border-stone-200 rounded-lg p-5">
+                    <h3 class="font-bold text-stone-900 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        研究框架
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded bg-stone-800 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+                            <div>
+                                <div class="font-medium text-stone-900">问题定义</div>
+                                <div class="text-stone-500 text-xs">数据孤岛、隐私保护、大模型推理不稳定</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded bg-stone-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+                            <div>
+                                <div class="font-medium text-stone-900">方法创新</div>
+                                <div class="text-stone-500 text-xs">TriCoAlign 循环对齐、量因子联邦学习、双分支残差映射</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded bg-stone-400 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+                            <div>
+                                <div class="font-medium text-stone-900">场景落地</div>
+                                <div class="text-stone-500 text-xs">入侵检测、医疗 AI、心理援助、碳交易、企业知识库</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="bg-white border border-stone-200 rounded-lg p-5">
+                    <h3 class="font-bold text-stone-900 mb-3 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        外部链接
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-stone-400 mt-1.5 flex-shrink-0"></span>
+                            <a href="https://github.com/Zaneph1" class="text-stone-700 hover:text-stone-900 underline" target="_blank">GitHub</a>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-stone-400 mt-1.5 flex-shrink-0"></span>
+                            <a href="https://orcid.org/0009-0009-3071-0170" class="text-stone-700 hover:text-stone-900 underline" target="_blank">ORCID</a>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-stone-400 mt-1.5 flex-shrink-0"></span>
+                            <a href="https://www.researchgate.net/scientificcontributions/Hui-Peng-2285630505" class="text-stone-700 hover:text-stone-900 underline" target="_blank">ResearchGate</a>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-stone-400 mt-1.5 flex-shrink-0"></span>
+                            <a href="https://huggingface.co/spaces/PHZane/emrwa/tree/main" class="text-stone-700 hover:text-stone-900 underline" target="_blank">EMRWA 模型部署</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t-2 border-stone-200 text-center text-sm text-stone-500">
+            <p>彭辉 · 学术与工程简历 · 更新于 2026 年 5 月</p>
+            <p class="mt-1 text-xs">本页面使用 HTML/Tailwind CSS 构建，可直接打印为 PDF</p>
+        </footer>
+    </div>
+
+    <script>
+        function filterPapers(cat) {
+            const papers = document.querySelectorAll('.paper-card');
+            const btns = { all: 'btn-all', published: 'btn-pub', review: 'btn-rev' };
+
+            Object.keys(btns).forEach(key => {
+                const btn = document.getElementById(btns[key]);
+                if (key === cat) {
+                    btn.className = 'px-3 py-1 rounded-md bg-stone-800 text-white font-medium transition-colors';
+                } else {
+                    btn.className = 'px-3 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors';
+                }
+            });
+
+            papers.forEach(paper => {
+                if (cat === 'all' || paper.dataset.cat === cat) {
+                    paper.style.display = 'block';
+                    setTimeout(() => paper.style.opacity = '1', 10);
+                } else {
+                    paper.style.opacity = '0';
+                    setTimeout(() => paper.style.display = 'none', 200);
+                }
+            });
+        }
+
+        function filterPatents(cat) {
+            const patents = document.querySelectorAll('.patent-card');
+            const btns = { all: 'pat-btn-all', granted: 'pat-btn-granted', pending: 'pat-btn-pending' };
+
+            Object.keys(btns).forEach(key => {
+                const btn = document.getElementById(btns[key]);
+                if (key === cat) {
+                    btn.className = 'px-3 py-1 rounded-md bg-stone-800 text-white font-medium transition-colors';
+                } else {
+                    btn.className = 'px-3 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors';
+                }
+            });
+
+            patents.forEach(patent => {
+                if (cat === 'all' || patent.dataset.pat === cat) {
+                    patent.style.display = 'block';
+                    setTimeout(() => patent.style.opacity = '1', 10);
+                } else {
+                    patent.style.opacity = '0';
+                    setTimeout(() => patent.style.display = 'none', 200);
+                }
+            });
+        }
+
+        function toggleAbs(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            const svg = btn.querySelector('svg');
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                btn.childNodes[0].textContent = '收起摘要 ';
+                svg.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                btn.childNodes[0].textContent = '展开摘要 ';
+                svg.classList.remove('rotate-180');
+            }
+        }
+    </script>
+
+    <!-- Image Lightbox -->
+    <div id="imgLightbox" class="img-lightbox" onclick="closeLightbox(event)">
+        <div class="img-lightbox-inner" onclick="event.stopPropagation()">
+            <button class="img-lightbox-close" onclick="closeLightbox()" aria-label="关闭">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="img-lightbox-counter" id="lbCounter">1 / 3</div>
+            <button class="img-lightbox-nav prev" onclick="prevImage()" aria-label="上一张">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button class="img-lightbox-nav next" onclick="nextImage()" aria-label="下一张">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+            <div class="img-wrap">
+                <div class="img-skeleton" id="lbSkeleton"></div>
+                <img id="lbImage" class="img-lightbox-img loading" src="" alt="" onload="this.classList.remove('loading');this.classList.add('loaded');document.getElementById('lbSkeleton').style.display='none';" onerror="this.style.display='none';document.getElementById('lbSkeleton').innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#a8a29e;font-size:14px\'>图片加载失败</div>';">
+            </div>
+            <div class="img-lightbox-caption">
+                <h4 id="lbTitle">标题</h4>
+                <p id="lbDesc">描述</p>
+            </div>
+            <div class="img-lightbox-thumbs" id="lbThumbs"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // Preview Data
+        const previewData = {"paper-cir2025": {"title": "Psychological Assistance Model", "desc": "RAG + LoRA 双引擎心理援助大模型架构", "images": ["https://kimi-web-img.moonshot.cn/img/substackcdn.com/2b6f4095f471b3fdca35b4926b22a8f303a12dc0.png", "https://kimi-web-img.moonshot.cn/img/media2.dev.to/9866ceae338f3d6d6351989979e2416a431c91aa.jpeg"]}, "paper-heliyon": {"title": "COPD 联邦学习框架", "desc": "分布式机器学习在慢阻肺临床建模中的实践", "images": ["https://kimi-web-img.moonshot.cn/img/www.researchgate.net/492809ac6ae4ed9127ecd8e7bdfd7ebf36d8ac00.png"]}, "paper-tdsc": {"title": "TriCoAlign 入侵检测", "desc": "三重循环对齐框架稳定大模型网络入侵检测", "images": ["https://kimi-web-img.moonshot.cn/img/elastisys.io/93ad0b1e757e7e4e5ed07fb2245627d183e6b48d.png", "https://kimi-web-img.moonshot.cn/img/docs.azure.cn/be58e0e04beac26a3749831f84fdd8c2db571d46.png"]}, "paper-pcfid": {"title": "PCF_ID 提示投射框架", "desc": "将结构化数据转为 Q-R-A 三元组微调大模型", "images": ["https://kimi-web-img.moonshot.cn/img/softwarediagrams.com/83b91fb1e058b7daf7198c04399f3703cd6a75cb.webp", "https://kimi-web-img.moonshot.cn/img/miro.medium.com/d9b3abe844f52b85550db1b5ad252f1a006683a8.png"]}, "paper-iscience": {"title": "DFSPAIM 病理分类模型", "desc": "深度学习模型用于隆突性皮肤纤维肉瘤病理分类", "images": ["https://kimi-web-img.moonshot.cn/img/www.aiforia.com/73641ba7a82463780447e55d19da455b00cfa2b0.png"]}, "paper-emrwa": {"title": "EMRWA 电子病历写作辅助", "desc": "基于真实临床数据的序列深度学习病历生成模型", "images": ["https://kimi-web-img.moonshot.cn/img/www.aiforia.com/73641ba7a82463780447e55d19da455b00cfa2b0.png"]}, "paper-cthelper": {"title": "CT_Helper 碳交易决策", "desc": "深度强化学习驱动的碳交易决策支持架构", "images": ["https://kimi-web-img.moonshot.cn/img/framerusercontent.com/208c58778ead39a5a507ff3e2a884d69cb34c4b6.png"]}, "patent-qffl": {"title": "量因子联邦学习", "desc": "基于数据量因子加权的联邦学习预测方法", "images": ["https://kimi-web-img.moonshot.cn/img/www.researchgate.net/492809ac6ae4ed9127ecd8e7bdfd7ebf36d8ac00.png"]}, "patent-vector": {"title": "安全向量检索", "desc": "特征解耦与双分支残差映射的安全向量检索", "images": ["https://kimi-web-img.moonshot.cn/img/assets.zilliz.com/26c9323b754a52931b8af939f3114bb9f5a2760b.png", "https://kimi-web-img.moonshot.cn/img/miro.medium.com/de6e98d46c315d8f85d2c535892c49b82aca7ce9"]}, "proj-zhiliu": {"title": "智流工坊 · 统一AI平台", "desc": "整合 Dify + OpenClaw 的多模型访问平台", "images": ["https://kimi-web-img.moonshot.cn/img/assets.dify.ai/a3b518e321f2f1fd74fd6fe97769f60c675902f9.png", "https://kimi-web-img.moonshot.cn/img/miichisoft.com/5731bcb3bc634b1d657d59307a36bb59c6b9bd7f.webp"]}, "proj-enterprise": {"title": "企业信息采集智能体", "desc": "多源信息自动抓取与结构化分析系统", "images": ["https://kimi-web-img.moonshot.cn/img/miichisoft.com/5731bcb3bc634b1d657d59307a36bb59c6b9bd7f.webp", "https://kimi-web-img.moonshot.cn/img/docs.sentry.io/916f1e1c3c85eae9d75d6fff4e500d4faedb7d15.png"]}, "proj-sales": {"title": "销售流程检验智能体", "desc": "AI 驱动的销售流程标准化校验系统", "images": ["https://kimi-web-img.moonshot.cn/img/www.lyzr.ai/10085dbe8f9485792f96cbb638655e2dd403935a.png", "https://kimi-web-img.moonshot.cn/img/sendbird.imgix.net/1725d62b19a4a349b2ed54f10d35c118f239065c.webp"]}};
+
+        let currentId = null;
+        let currentIndex = 0;
+
+        function openLightbox(id) {
+            currentId = id;
+            currentIndex = 0;
+            updateLightbox();
+            document.getElementById('imgLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Initialize hover thumbs and mark multi-image cards
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[data-preview]').forEach(card => {
+                const id = card.dataset.preview;
+                const data = previewData[id];
+                if (!data) return;
+
+                // Mark multi-image buttons
+                if (data.images.length > 1) {
+                    const btn = card.querySelector('.preview-trigger');
+                    if (btn) btn.classList.add('has-multiple');
+                }
+
+                // Fill hover thumb
+                const thumb = card.querySelector('.hover-thumb img');
+                const badge = card.querySelector('.hover-thumb-badge');
+                if (thumb) {
+                    thumb.src = data.images[0];
+                    thumb.alt = data.title;
+                }
+                if (badge) {
+                    badge.textContent = data.images.length > 1 ? data.images.length + ' 张' : '预览';
+                }
+            });
+        });
+
+        function closeLightbox(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('imgLightbox').classList.remove('active');
+            document.body.style.overflow = '';
+            currentId = null;
+        }
+
+        function updateLightbox() {
+            const data = previewData[currentId];
+            const images = data.images;
+
+            // Reset loading state
+            const img = document.getElementById('lbImage');
+            const skeleton = document.getElementById('lbSkeleton');
+            img.classList.remove('loaded');
+            img.classList.add('loading');
+            skeleton.style.display = 'block';
+
+            document.getElementById('lbImage').src = images[currentIndex];
+            document.getElementById('lbTitle').textContent = data.title;
+            document.getElementById('lbDesc').textContent = data.desc;
+            document.getElementById('lbCounter').textContent = (currentIndex + 1) + ' / ' + images.length;
+
+            // Build thumbnails
+            const thumbsContainer = document.getElementById('lbThumbs');
+            thumbsContainer.innerHTML = '';
+            images.forEach((img, idx) => {
+                const thumb = document.createElement('img');
+                thumb.src = img;
+                thumb.className = 'img-lightbox-thumb' + (idx === currentIndex ? ' active' : '');
+                thumb.onclick = () => { currentIndex = idx; updateLightbox(); };
+                thumbsContainer.appendChild(thumb);
+            });
+
+            // Show/hide nav buttons
+            const prevBtn = document.querySelector('.img-lightbox-nav.prev');
+            const nextBtn = document.querySelector('.img-lightbox-nav.next');
+            prevBtn.style.display = images.length > 1 ? 'flex' : 'none';
+            nextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+        }
+
+        function nextImage() {
+            const images = previewData[currentId].images;
+            currentIndex = (currentIndex + 1) % images.length;
+            updateLightbox();
+        }
+
+        function prevImage() {
+            const images = previewData[currentId].images;
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateLightbox();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!currentId) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        document.getElementById('imgLightbox').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        document.getElementById('imgLightbox').addEventListener('touchend', (e) => {
+            if (!currentId) return;
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextImage();
+                else prevImage();
+            }
+        });
+    </script>
+
+</body>
+</html>
